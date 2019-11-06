@@ -1,0 +1,17 @@
+#!/bin/sh
+
+action="${1}"; shift
+
+usage() {
+    cat <<USAGE
+    $(basename "${0}") <task description>
+      Add a task if it doesn't already exist
+
+USAGE
+}
+
+test "${action}" = "usage" && usage && exit
+
+# If the command already exists, exit.
+"$TODO_SH" command ls | grep -E "${*}\$" && echo "Already exists." && exit
+"$TODO_SH" command add "$@"
